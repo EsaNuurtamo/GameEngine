@@ -15,32 +15,32 @@ Alustavasti taustana toimii kuva jossa ei ole "seini‰" mutta jos ehdin niin kart
 **Yleiset ominaisuudet:**
 
 *Valikko*
-+peliss‰ on valikko josta voi sulkea pelin tai lukea ohjeet(puu-rakenne jos laajenee isoksi)
+- peliss‰ on valikko josta voi sulkea pelin tai lukea ohjeet(puu-rakenne jos laajenee isoksi)
 
 *Grafiikka*
-+itsetehty pixelikrafiikka gif-tiedostoina jotka javassa bufferedimageina
+- itsetehty pixelikrafiikka gif-tiedostoina jotka javassa bufferedimageina
 
 
 
 **Pelaajan toiminnot:**
 
 *Ampuminen*
-+pelaaja ampuu hiiren osoittimen suuntaaan pit‰m‰ll‰ hiiren vasenta nappia pohjassa
-+luodit l‰htev‰t tietyin aikav‰lein ja tuhoutuvat kun ovat tietyn et‰isyyden p‰‰ss‰ pelaajasta
-+luodin osuessa viholliseen sek‰ luoti ett‰ vihollinen tuhoutuu
+- pelaaja ampuu hiiren osoittimen suuntaaan pit‰m‰ll‰ hiiren vasenta nappia pohjassa
+- luodit l‰htev‰t tietyin aikav‰lein ja tuhoutuvat kun ovat tietyn et‰isyyden p‰‰ss‰ pelaajasta
+- luodin osuessa viholliseen sek‰ luoti ett‰ vihollinen tuhoutuu
 
 
 *K‰‰ntyminen*
-+pelaaja on aina k‰‰ntyneen‰ hiiren osoittamaan suuntaan
+- pelaaja on aina k‰‰ntyneen‰ hiiren osoittamaan suuntaan
 
 *Liikkuminen*
-+pelaaja liikkuu napeista WASD(nelj‰‰n suuntaan, pit‰m‰ll‰ pohjassa)
-+liikkumisella on nopeus esim. 5 pixeli‰/pelip‰ivitys
+- pelaaja liikkuu napeista WASD(nelj‰‰n suuntaan, pit‰m‰ll‰ pohjassa)
+- liikkumisella on nopeus esim. 5 pixeli‰/pelip‰ivitys
 
 
 
 **Teko‰lyn toiminnot:**
 
-+tulee pelaajaa kohti ja osuessaan r‰j‰ht‰‰
+- tulee pelaajaa kohti ja osuessaan r‰j‰ht‰‰
 
 	

@@ -2,6 +2,8 @@
 package game.gui;
 
 import game.Main;
+import game.handlers.Keys;
+import game.handlers.PlayState;
 import game.handlers.GameHandler;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -13,12 +15,13 @@ import javax.swing.JPanel;
 
 
 public class GamePanel extends JPanel implements Runnable{
-    public static final int FPS=40;
+    public static final int FPS=60;
     //yhden pelipäivityksen kesto millisekunneissa
     public static final long tickLength=1000/FPS;
     private BufferedImage image;
     private Graphics2D graphics;
     private GameHandler gameHandler;
+    private Keys keys;
     
     
     public GamePanel() {
@@ -29,10 +32,12 @@ public class GamePanel extends JPanel implements Runnable{
         image = new BufferedImage(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
         graphics = (Graphics2D) image.getGraphics();
         gameHandler=new GameHandler();
+        gameHandler.setCurState(new PlayState(gameHandler));
+        keys= new Keys();
     }
     
     public void init(){
-        
+        addKeyListener(keys);
     }
     
     public void run(){
@@ -42,24 +47,25 @@ public class GamePanel extends JPanel implements Runnable{
         long elapsed;
         long wait;
         
-        //main game loop
+        //pelin päälooppi
         while(true){
             start=System.nanoTime();
             
             //tähän pelin logiikan läpikäynti
-            gameHandler.updateGame();
-            gameHandler.drawGame(graphics);
-            draw();
+             gameHandler.updateGame();
+             gameHandler.drawGame(graphics);
+             draw();
             //
            
             elapsed = System.nanoTime() - start;
-            wait=tickLength-elapsed/1000;
-            if(wait<=0)wait=1;
+            wait=tickLength-(elapsed/1000000);
+            if(wait<0)wait=1;
             try {
                 Thread.sleep(wait);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
+            System.out.println(1000000000/(System.nanoTime()-start));
             
         }
         

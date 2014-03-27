@@ -35,22 +35,22 @@ public class TileMapTest {
     @Test
     public void ColAndRowWhenXandYNegative(){
         map.setLocation(new Point(-50,-50));
-        assertEquals(50/map.mapSize, map.getStartCol());
-        assertEquals(50/map.mapSize, map.getStartRow());
+        assertEquals(50/map.tileSize, map.getStartCol());
+        assertEquals(50/map.tileSize, map.getStartRow());
     }
     
     @Test
     public void ColAndRowWhenXandYPositive(){
         map.setLocation(new Point(50,50));
-        assertEquals((int)-Math.ceil(50.0/map.mapSize), map.getStartCol());
-        assertEquals((int)-Math.ceil(50.0/map.mapSize), map.getStartRow());
+        assertEquals((int)-Math.ceil(50.0/map.tileSize), map.getStartCol());
+        assertEquals((int)-Math.ceil(50.0/map.tileSize), map.getStartRow());
     }
     
     @Test
     public void ColAndRowWhenXpositiveAndYnegative(){
         map.setLocation(new Point(60,-70));
-        assertEquals((int)-Math.ceil(60.0/map.mapSize), map.getStartCol());
-        assertEquals(70/map.mapSize, map.getStartRow());
+        assertEquals((int)-Math.ceil(60.0/map.tileSize), map.getStartCol());
+        assertEquals(70/map.tileSize, map.getStartRow());
     }
     
     @Test

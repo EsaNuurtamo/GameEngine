@@ -2,41 +2,65 @@
 package game.objects;
 
 import game.Main;
+import game.handlers.Clicks;
+import game.handlers.GameHandler;
+import game.handlers.GameState;
+import game.handlers.MouseMovement;
+import game.handlers.PlayState;
 import game.map.TileMap;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-public class Player extends MapObject{
-
+public class Player extends MapObject implements Updatable{
+    
     public Player(TileMap map) {
         super(map);
-        setWidth(40);
-        setHeight(40);
+        setWidth(Main.TILE_SIZE);
+        setHeight(Main.TILE_SIZE);
+        type=MapObject.PLAYER;
     }
 
     @Override
     public void setPoint(Point point) {
-        if(point.x<Main.BLOCK_SIZE+width/2)return;
-        if(point.x>Main.BLOCK_SIZE*(map.mapSize-1)-width/2)return;
-        if(point.y<Main.BLOCK_SIZE+height/2)return;
-        if(point.y>Main.BLOCK_SIZE*(map.mapSize-1)-height/2)return;
-        
         super.setPoint(point);
-        int x=-point.x+Main.SCREEN_WIDTH/2;
-        int y=-point.y+Main.SCREEN_HEIGHT/2;
+        if(collides)return;
+        int x=-point.x+Math.round(Main.WIDTH/2);
+        int y=-point.y+Math.round(Main.HEIGHT/2);
         getMap().setLocation(new Point(x,y));
     }
     
-    public void move(int dX, int dY){
-        setPoint(new Point(getPoint().x+dX, getPoint().y+dY));
+    
+    
+    public int getXonScreen(){
+        return Main.WIDTH/2; 
+    }
+    
+    public int getYonScreen(){
+        return Main.HEIGHT/2;
     }
     
     public void draw(Graphics2D g){
+        g.setColor(Color.BLACK);
+        g.fillOval(map.getX()+getX()-width/2, map.getY()+getY()-height/2, width, height);
         g.setColor(Color.CYAN);
-        g.fillOval(Main.SCREEN_WIDTH/2-getWidth()/2, Main.SCREEN_HEIGHT/2-getHeight()/2, getWidth(), getHeight());
-        g.setColor(Color.ORANGE);
-        g.drawString(getX()+" "+getY(), Main.SCREEN_WIDTH/2-getWidth()/2, Main.SCREEN_HEIGHT/2-getHeight()/2);
+        g.fillOval(Main.WIDTH/2-getWidth()/2, Main.HEIGHT/2-getHeight()/2, getWidth()-5, getHeight()-5);
+        g.setColor(Color.BLUE);
+        g.drawString(getX()+" "+getY(), map.getX()+getX()-width/2, map.getY()+getY()-height/2);
+        
     }
+
+    @Override
+    public void update(PlayState state) {
+        
+        if(Clicks.clicked){
+            Bullet b=new Bullet(point,map);
+            b.calculateVector();
+            state.getNewObjects().add(b);
+        }
+        
+    }
+    
+    
     
 }

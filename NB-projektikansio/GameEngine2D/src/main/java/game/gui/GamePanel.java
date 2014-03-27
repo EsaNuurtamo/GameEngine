@@ -2,9 +2,11 @@
 package game.gui;
 
 import game.Main;
+import game.handlers.Clicks;
 import game.handlers.Keys;
 import game.handlers.PlayState;
 import game.handlers.GameHandler;
+import game.handlers.MouseMovement;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -22,6 +24,8 @@ public class GamePanel extends JPanel implements Runnable{
     private Graphics2D graphics;
     private GameHandler gameHandler;
     private Keys keys;
+    private MouseMovement mm;
+    private Clicks clicks;
     
     
     public GamePanel() {
@@ -29,15 +33,20 @@ public class GamePanel extends JPanel implements Runnable{
         super.setBackground(Color.BLACK);
         setFocusable(true);
         requestFocusInWindow();
-        image = new BufferedImage(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
+        image = new BufferedImage(Main.WIDTH, Main.HEIGHT, BufferedImage.TYPE_INT_RGB);
         graphics = (Graphics2D) image.getGraphics();
         gameHandler=new GameHandler();
-        gameHandler.setCurState(new PlayState(gameHandler));
+        gameHandler.setState(GameHandler.PLAY_STATE);
         keys= new Keys();
+        mm=new MouseMovement();
+        clicks=new Clicks();
     }
     
     public void init(){
         addKeyListener(keys);
+        addMouseMotionListener(mm);
+        addMouseListener(clicks);
+        
     }
     
     public void run(){
@@ -65,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable{
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
-            System.out.println(1000000000/(System.nanoTime()-start));
+            //System.out.println(1000000000/(System.nanoTime()-start));
             
         }
         
@@ -75,8 +84,8 @@ public class GamePanel extends JPanel implements Runnable{
         if(getGraphics()==null)return;
             
         g2.drawImage(image, 0, 0,
-                    (int)(Main.SCREEN_WIDTH*Main.SCALE),
-                    (int)(Main.SCREEN_HEIGHT*Main.SCALE), null);
+                    (int)(Main.WIDTH*Main.SCALE),
+                    (int)(Main.HEIGHT*Main.SCALE), null);
         g2.dispose();
         
                 

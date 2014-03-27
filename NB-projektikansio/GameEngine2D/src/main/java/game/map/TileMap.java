@@ -14,11 +14,11 @@ import java.util.logging.Logger;
 
 public class TileMap {
     public static int mapSize=40;
-    public static int tileSize=40;
+    public static int tileSize=Main.TILE_SIZE;
     
     //ruudulla näkyvän mapin osuuden mitat
-    private int colsToDraw=Main.SCREEN_WIDTH/tileSize+2;
-    private int rowsToDraw=Main.SCREEN_HEIGHT/tileSize+2;
+    private int colsToDraw=Main.WIDTH/tileSize+2;
+    private int rowsToDraw=Main.HEIGHT/tileSize+2;
     
     //mapin ensimmäinen rivi ja sarake jotka näkyvissä
     //näistä piirtäminen aloitetaan

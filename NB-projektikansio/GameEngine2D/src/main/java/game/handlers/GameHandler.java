@@ -15,8 +15,13 @@ public class GameHandler {
         
     }
 
-    public void setCurState(GameState curState) {
-        this.curState = curState;
+    public void setState(int state) {
+        curState=null;
+        if(state==MENU_STATE){
+            curState=new MenuState(this);
+        }else if(state==PLAY_STATE){
+            curState=new PlayState(this);
+        }
     }
     
     

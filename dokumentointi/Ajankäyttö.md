@@ -22,11 +22,19 @@
 - korjattu testejä -2h
 - bugien korjausta -1h
 - tehty rajapinta Updatable ja tehty uusi luokka Bullet -2h
+- yhteensä: 20h
 
 *24.3*
+- Hiiren kuuntelu toteutettu -2h
 - jatkettu ampumistoiminnon tekemistä:
   lisätty uusia metodeita PlayStateen ja
   jatkettu Bullet-luokkaa -4h
+- yhteensä: 26h
+
+*27.3*
+- Uusi luokkakaavio toteutettu -1h
+- Luokkien refaktorointia -2h
+- yhteensä: 29h
 
 
 

@@ -1,5 +1,5 @@
 
-package game.handlers;
+package game.gui;
 
 
 

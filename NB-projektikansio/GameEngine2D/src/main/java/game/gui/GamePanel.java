@@ -2,11 +2,8 @@
 package game.gui;
 
 import game.Main;
-import game.handlers.Clicks;
-import game.handlers.Keys;
 import game.handlers.PlayState;
 import game.handlers.GameHandler;
-import game.handlers.MouseMovement;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;

@@ -4,6 +4,9 @@
  */
 package game.handlers;
 
+import game.gui.MouseMovement;
+import game.gui.Keys;
+import game.gui.Clicks;
 import game.Main;
 import game.map.TileMap;
 import game.objects.Bullet;
@@ -131,8 +134,12 @@ public class PlayState extends GameState{
         g.drawLine(MouseMovement.x-CURSOR_SIZE/2, MouseMovement.y, MouseMovement.x+CURSOR_SIZE/2, MouseMovement.y);
         g.drawLine(MouseMovement.x, MouseMovement.y-CURSOR_SIZE/2, MouseMovement.x, MouseMovement.y+CURSOR_SIZE/2);
         
-        /*g.drawLine(Main.SCREEN_WIDTH/2, 0, Main.SCREEN_WIDTH/2, Main.SCREEN_HEIGHT);
-        g.drawLine(0, Main.SCREEN_HEIGHT/2, Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT/2);*/
+        //piirrä ohje
+        g.setColor(Color.WHITE);
+        g.fill3DRect(10, 10, 200, 50, true);
+        g.setColor(Color.BLACK);
+        g.drawString("Press ESC to quit", 30, 30);
+        
     }
 
     @Override

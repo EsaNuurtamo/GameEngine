@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.handlers;
+package game.gui;
 
 import game.Main;
 import java.awt.event.MouseEvent;

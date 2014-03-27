@@ -2,10 +2,10 @@
 package game.objects;
 
 import game.Main;
-import game.handlers.Clicks;
+import game.gui.Clicks;
 import game.handlers.GameHandler;
 import game.handlers.GameState;
-import game.handlers.MouseMovement;
+import game.gui.MouseMovement;
 import game.handlers.PlayState;
 import game.map.TileMap;
 import java.awt.Color;

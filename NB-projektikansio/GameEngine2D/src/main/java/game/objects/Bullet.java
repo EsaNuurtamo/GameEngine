@@ -5,16 +5,16 @@
 package game.objects;
 
 import game.Main;
-import game.handlers.Clicks;
+import game.gui.Clicks;
 import game.handlers.GameState;
-import game.handlers.MouseMovement;
+import game.gui.MouseMovement;
 import game.handlers.PlayState;
 import game.map.TileMap;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.List;
 import java.awt.Point;
-import java.util.Vector;
+
 
 /**
  *
@@ -22,6 +22,7 @@ import java.util.Vector;
  */
 public class Bullet extends MapObject implements Updatable{
     private int speed=(int)(Main.TILE_SIZE*1.5);
+    
     public Bullet(TileMap map) {
         this(null,map);
         
@@ -49,7 +50,7 @@ public class Bullet extends MapObject implements Updatable{
     @Override
     public void update(PlayState state) {
         
-        if(state.getPlayer().point.distance(point)>1000||collides)destroyed=true;
+        if(collides)destroyed=true;
         if(ticker%5==0){
             move(dX,dY);
         }

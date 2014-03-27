@@ -18,3 +18,15 @@
 - pit-raportti -1h
 - yhteensä: 15h
 
+*23.3*
+- korjattu testejä -2h
+- bugien korjausta -1h
+- tehty rajapinta Updatable ja tehty uusi luokka Bullet -2h
+
+*24.3*
+- jatkettu ampumistoiminnon tekemistä:
+  lisätty uusia metodeita PlayStateen ja
+  jatkettu Bullet-luokkaa -4h
+
+
+

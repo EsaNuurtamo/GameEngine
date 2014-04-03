@@ -12,10 +12,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 
-
+/**
+ * Luokka GamePanel suoritetaan omana säikeenä
+ * Se sisältää main loopin jossa peli päivittyy
+ * Piirtäminen tapahtuu kaksivaiheisesti: aluksi buffered imageen 
+ * ja sitten vasta buffered image piirtyy GamePanelin perimään Jpaneliin
+ */
 public class GamePanel extends JPanel implements Runnable{
     public static final int FPS=60;
-    //yhden pelipäivityksen kesto millisekunneissa
     public static final long tickLength=1000/FPS;
     private BufferedImage image;
     private Graphics2D graphics;
@@ -46,6 +50,11 @@ public class GamePanel extends JPanel implements Runnable{
         
     }
     
+    /**
+     * Run metodia kutsutaan kun säie aloitetaan mainissa
+     * Tämä sisältää pää peliloopin jossa peli päivitetään ja
+     * päivitysten nopeus rajoitetaan 60 kertaan sekunnissa wait-komentojen avulla
+     */
     public void run(){
         init();
         //nanosekunneissa
@@ -56,7 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
         //pelin päälooppi
         while(true){
             start=System.nanoTime();
-            
+             
             //tähän pelin logiikan läpikäynti
              gameHandler.updateGame();
              gameHandler.drawGame(graphics);
@@ -72,10 +81,13 @@ public class GamePanel extends JPanel implements Runnable{
                 ex.printStackTrace();
             }
             //System.out.println(1000000000/(System.nanoTime()-start));
-            
         }
-        
     }
+    
+    /**
+     * Draw metodi piirtää bufferedimagen(joka sis. pelin kaikki grafiikat)
+     * JPanelin Graphics oliolla
+     */
     public void draw(){
         Graphics g2 = getGraphics();
         if(getGraphics()==null)return;

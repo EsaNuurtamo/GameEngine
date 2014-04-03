@@ -36,7 +36,7 @@ public class Clicks implements MouseListener{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        clicked=false;
+        
         
     }
 

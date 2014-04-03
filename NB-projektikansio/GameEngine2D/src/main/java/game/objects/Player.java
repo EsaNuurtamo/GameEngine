@@ -8,9 +8,12 @@ import game.handlers.GameState;
 import game.gui.MouseMovement;
 import game.handlers.PlayState;
 import game.map.TileMap;
+import game.tools.Collisions;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 
 public class Player extends MapObject implements Updatable{
     
@@ -18,7 +21,9 @@ public class Player extends MapObject implements Updatable{
         super(map);
         setWidth(Main.TILE_SIZE);
         setHeight(Main.TILE_SIZE);
+        setColor(Color.CYAN);
         type=MapObject.PLAYER;
+        setSpeed(5);
     }
 
     @Override
@@ -39,25 +44,35 @@ public class Player extends MapObject implements Updatable{
     public int getYonScreen(){
         return Main.HEIGHT/2;
     }
-    
-    public void draw(Graphics2D g){
-        g.setColor(Color.BLACK);
-        g.fillOval(map.getX()+getX()-width/2, map.getY()+getY()-height/2, width, height);
-        g.setColor(Color.CYAN);
-        g.fillOval(Main.WIDTH/2-getWidth()/2, Main.HEIGHT/2-getHeight()/2, getWidth()-5, getHeight()-5);
+
+    @Override
+    public void draw(Graphics2D g) {
+        super.draw(g);
         g.setColor(Color.BLUE);
-        g.drawString(getX()+" "+getY(), map.getX()+getX()-width/2, map.getY()+getY()-height/2);
-        
+        g.drawString(getX()+" "+getY(), getX()+map.getX(), getY()+map.getY());
     }
+    
+    
 
     @Override
     public void update(PlayState state) {
         
+        
+        for(MapObject m:state.getObjectsOfType(MapObject.ENEMY)){
+            if(Collisions.circleCircleCollision(m, this)){
+                destroyed=true;
+                m.setDestroyed(true);
+            }
+            
+            
+        }
+        
         if(Clicks.clicked){
             Bullet b=new Bullet(point,map);
-            b.calculateVector();
+            b.calculateVector(state);
             state.getNewObjects().add(b);
         }
+        
         
     }
     

@@ -14,6 +14,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.List;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.util.Random;
 
 
 /**
@@ -21,23 +26,36 @@ import java.awt.Point;
  * @author esa
  */
 public class Bullet extends MapObject implements Updatable{
-    private int speed=(int)(Main.TILE_SIZE*1.5);
-    
+    private int speed=(int)(Main.TILE_SIZE*1.2);
+    private Point lastPoint;
     public Bullet(TileMap map) {
         this(null,map);
-        
+        setHitBox(new Rectangle(0,0,0,0));
         
     }
     
     public Bullet(Point p, TileMap map){
         super(map);
         super.point=p;
+        lastPoint=p;
+        
         setWidth(Main.TILE_SIZE/4);
         setHeight(Main.TILE_SIZE/4);
+        setColor(Color.DARK_GRAY);
         type=MapObject.BULLET;
+        
+    }
+
+    public Point getLastPoint() {
+        return lastPoint;
+    }
+
+    public void setLastPoint(Point lastPoint) {
+        this.lastPoint = lastPoint;
     }
     
-    public void calculateVector(){
+    public void calculateVector(PlayState state){
+        
         int x=Clicks.x-map.getX();
         int y=Clicks.y-map.getY();
         Point p=new Point(x,y);
@@ -45,23 +63,23 @@ public class Bullet extends MapObject implements Updatable{
         double divider=(point.distance(p)/speed);
         dX=(int)((x-getX())/divider);
         dY=(int)((y-getY())/divider);
+        
+        
     }
 
     @Override
     public void update(PlayState state) {
         
         if(collides)destroyed=true;
-        if(ticker%5==0){
-            move(dX,dY);
-        }
+        setLastPoint(getPoint());
+        move(dX,dY);
+        setHitBox(new Line2D.Float(map.getX()+getLastPoint().x,map.getY()+getLastPoint().y,map.getX()+getX(),map.getY()+getY()));
     }
+
+   
+
     
-    public void draw(Graphics2D g){
-        g.setColor(Color.BLACK);
-        g.fillOval(map.getX()+getX()-width/2, map.getY()+getY()-height/2, width, height);
-        g.setColor(Color.GREEN);
-        g.fillOval(map.getX()+getX()-width/2, map.getY()+getY()-height/2, width-3, height-3);
-        
-    }
+    
+    
     
 }

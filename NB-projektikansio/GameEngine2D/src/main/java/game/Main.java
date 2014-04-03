@@ -19,7 +19,7 @@ public class Main {
     public static final int TILE_SIZE=40;
     
     public static final double ASPECT_RATIO=SCREEN_WIDTH/SCREEN_HEIGHT;
-    public static final int HEIGHT=600;
+    public static final int HEIGHT=720;
     public static final int WIDTH=(int)(HEIGHT*ASPECT_RATIO);
     public static final double SCALE=SCREEN_HEIGHT/HEIGHT;
     
@@ -29,7 +29,7 @@ public class Main {
         
         JFrame frame = new JFrame();
         GamePanel gamePanel=new GamePanel();  
-        frame.setUndecorated(true);
+        //frame.setUndecorated(true);
         frame.setPreferredSize(new Dimension((int)(WIDTH*SCALE), (int)(HEIGHT*SCALE)));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         

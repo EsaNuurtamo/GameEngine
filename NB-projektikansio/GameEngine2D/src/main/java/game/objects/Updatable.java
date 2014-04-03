@@ -11,11 +11,15 @@ import game.handlers.PlayState;
 import java.util.ArrayList;
 
 /**
- *
- * @author esa
+ * Tämän rajapinnan toteuttavat ne objektit
+ * jotka sisältävät läpikäytävää logiikkaa
  */
 public interface Updatable {
     
+    /**
+     * Sisältää logiikan jonka mukaan objektin arvot päivittyvät
+     * @param state 
+     */
     void update(PlayState state);
     
 }

@@ -4,6 +4,12 @@ package game.handlers;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+/**
+ * GameHandler huolehtii siitä mikä osa pelistä on kulloinkin 
+ * aktiivisena. Esim. jos ollaan pelissä (curState=PlayState)
+ * ja painetaan esc niin siirrytään valikkoon (GameHandler 
+ * vaihtaa curState=menuState)
+ */
 public class GameHandler {
     public static final int MENU_STATE=0;
     public static final int PLAY_STATE=1;
@@ -14,7 +20,11 @@ public class GameHandler {
     public GameHandler() {
         
     }
-
+    
+    /**
+     * Asettaa lukua vastaavan pelitilan aktiiviseksi
+     * @param state saadaan toiselta luokalta
+     */
     public void setState(int state) {
         curState=null;
         if(state==MENU_STATE){
@@ -24,15 +34,21 @@ public class GameHandler {
         }
     }
     
-    
-    
-    //pelilogiikka
+    /**
+     * Päivittää aktiivisen pelitilan
+     */
     public void updateGame(){
         curState.update();
         
     }
-    //pelin piirto
+    
+    /**
+     * Piirtää aktiivisen pelitilan
+     * @param g on GamePanelissa olevan BufferedImagen 
+     * krafiikkaolio
+     */
     public void drawGame(Graphics2D g){
+        
         curState.draw(g);
         
     }

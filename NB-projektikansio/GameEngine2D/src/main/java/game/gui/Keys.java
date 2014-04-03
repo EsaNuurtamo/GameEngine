@@ -12,7 +12,8 @@ public class Keys implements KeyListener{
     public static final int UP_KEY=2;
     public static final int DOWN_KEY=3;
     public static final int ESC=4;
-    public static final int KEY_COUNT=5;
+    public static final int E_KEY=5;
+    public static final int KEY_COUNT=6;
     public static boolean[] keyState=new boolean[KEY_COUNT];
     
     public static boolean[] prevKeyState=new boolean[KEY_COUNT];
@@ -27,6 +28,7 @@ public class Keys implements KeyListener{
 	else if(i == KeyEvent.VK_S) keyState[DOWN_KEY] = b;
 	else if(i == KeyEvent.VK_D) keyState[RIGHT_KEY] = b;
         else if(i == KeyEvent.VK_ESCAPE) keyState[ESC] = b;
+        else if(i == KeyEvent.VK_E) keyState[E_KEY] = b;
     }
 	
     /*Update päivittää nykyiset painallukset edellisiksi

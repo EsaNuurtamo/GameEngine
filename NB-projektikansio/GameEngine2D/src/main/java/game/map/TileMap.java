@@ -12,6 +12,10 @@ import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Pelin kartta joka 
+ * @author esa
+ */
 public class TileMap {
     public static int mapSize=40;
     public static int tileSize=Main.TILE_SIZE;
@@ -93,21 +97,31 @@ public class TileMap {
     public int getY(){
         return location.y;
     }
+    public void drawBackround(Graphics2D g){
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
+    }
     
     public void draw(Graphics2D g){
+        drawBackround(g);
+        
         if(location==null)return;
         
         for(int curX = startCol;curX<=startCol+colsToDraw;curX++){
             for(int curY = startRow;curY<=startRow+rowsToDraw;curY++){
                 if(curX<0||curX>=mapSize||curY<0||curY>=mapSize){
-                    g.setColor(Color.BLACK);
-                }else if(map[curX][curY]==1){
+                    continue;
+                }
+                if(map[curX][curY]==1){
                     g.setColor(Color.RED);
                 }else{
                     g.setColor(Color.LIGHT_GRAY);
+                    
                 }
+                
                 g.fill3DRect(location.x+curX*tileSize, 
                              location.y+curY*tileSize, tileSize, tileSize, true);
+                
             }
         }
     }

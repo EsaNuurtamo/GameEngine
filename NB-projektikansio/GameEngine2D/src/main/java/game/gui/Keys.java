@@ -5,7 +5,9 @@ package game.gui;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+/**
+ * Säilyttää tietoa siitä mitkä näppäimet on painettuna
+ */
 public class Keys implements KeyListener{
     public static final int LEFT_KEY=0;
     public static final int RIGHT_KEY=1;
@@ -21,7 +23,12 @@ public class Keys implements KeyListener{
     
     
     
-    //tulkitsee keyCoden näppäinarvot ja sijoittaa booleanin oikealle paikalle
+    /**
+     * Asettaa totuusarvon oikean napin kohdalle listaan
+     * 
+     * @param i KeyEventistä painalluksen yhteydessä saatu eventID
+     * @param b jos painetaan nappia niin true jos vapautetaan nappi niin false
+     */
     public static void setKey(int i, boolean b) {
         if(i == KeyEvent.VK_W) keyState[UP_KEY] = b;
 	else if(i == KeyEvent.VK_A) keyState[LEFT_KEY] = b;
@@ -31,8 +38,9 @@ public class Keys implements KeyListener{
         else if(i == KeyEvent.VK_E) keyState[E_KEY] = b;
     }
 	
-    /*Update päivittää nykyiset painallukset edellisiksi
-     *jos näppäin pohjassa niin sekä edellisen arvo ja nykyinen on true
+    /**
+     * Update päivittää nykyiset painallukset edellisiksi
+     * jos näppäin pohjassa niin sekä edellisen arvo ja nykyinen on true
      */
     public static void update() {
         for(int i = 0; i < KEY_COUNT; i++) {
@@ -40,9 +48,12 @@ public class Keys implements KeyListener{
 	}
     }
 	
-    /*jos aikaisemmin jo painettu nappi pohjaan,
-     *niin ei enää uudestaan suorita napin aiheuttamaa reaktiota pelissä
-     *eli ei esim liiku kuin kerran vaikka pidetään liikkumisnappia pohjassa
+    /**
+     * jos aikaisemmin jo painettu nappi pohjaan,
+     * niin ei enää uudestaan suorita napin aiheuttamaa reaktiota pelissä
+     * eli ei esim liiku kuin kerran vaikka pidetään liikkumisnappia pohjassa
+     * sillä prev==true ja nykyinen==true joten palauttaa false
+     * @param i 
      */
     public static boolean isPressed(int i) {
 	return keyState[i]&& !prevKeyState[i];

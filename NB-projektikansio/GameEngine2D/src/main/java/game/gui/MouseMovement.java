@@ -8,6 +8,9 @@ import game.Main;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
+/**
+ * Kuuntelee hiiren liikkeitä ja pitää kirjaa hiiren sijainnista
+ */
 public class MouseMovement implements MouseMotionListener{
     public static int x;
     public static int y;

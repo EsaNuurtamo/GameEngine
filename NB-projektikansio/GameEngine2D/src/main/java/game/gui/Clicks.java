@@ -5,12 +5,12 @@
 package game.gui;
 
 import game.Main;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- *
- * @author esa
+ * Kuuntelee klikkauksia ja pitää kirjaa viimeisen klikkauksen sijainnista
  */
 public class Clicks implements MouseListener{
     public static int x;
@@ -20,7 +20,9 @@ public class Clicks implements MouseListener{
     public static void resetClicks(){
         clicked=false;
     }
-
+    public static Point getPoint(){
+        return new Point(x,y);
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
         

@@ -69,7 +69,7 @@ public class Player extends MapObject implements Updatable{
         
         if(Clicks.clicked){
             Bullet b=new Bullet(point,map);
-            b.calculateVector(state);
+            b.calculateVector();
             state.getNewObjects().add(b);
         }
         

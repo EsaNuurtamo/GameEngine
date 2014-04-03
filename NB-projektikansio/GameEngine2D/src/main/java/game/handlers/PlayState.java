@@ -24,8 +24,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- *
- * @author esa
+ * Luokka kuva tilaa jossa peliä pelataan
  */
 public class PlayState extends GameState{
     public static final int CURSOR_SIZE=20;

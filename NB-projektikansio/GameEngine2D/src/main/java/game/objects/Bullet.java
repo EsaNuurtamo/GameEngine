@@ -22,8 +22,7 @@ import java.util.Random;
 
 
 /**
- *
- * @author esa
+ * Luokka kuvaa yksittäistä luotia pelissä
  */
 public class Bullet extends MapObject implements Updatable{
     private int speed=(int)(Main.TILE_SIZE*1.2);
@@ -53,8 +52,11 @@ public class Bullet extends MapObject implements Updatable{
     public void setLastPoint(Point lastPoint) {
         this.lastPoint = lastPoint;
     }
-    
-    public void calculateVector(PlayState state){
+    /**
+     * 
+     *  
+     */
+    public void calculateVector(){
         
         int x=Clicks.x-map.getX();
         int y=Clicks.y-map.getY();

@@ -13,6 +13,9 @@ import java.util.ArrayList;
 /**
  * Tämän rajapinnan toteuttavat ne objektit
  * jotka sisältävät läpikäytävää logiikkaa
+ * 
+ * Tällä hetkellä kaikki objektit perivät tämän luokan
+ * mutta tulevaisuudessa myös staattisia objekteja(esim. pelaajan asettama seinä)
  */
 public interface Updatable {
     

@@ -26,13 +26,17 @@ public abstract class MapObject {
     public static final int PLAYER=0;
     public static final int BULLET=1;
     public static final int ENEMY=2;
+    public static final int SPAWNER=3;
+    public static final int SOOTING_ENEMY=4;
     
     //paikka ja vektori
     protected Point point;
+    protected int targetX;
+    protected int targetY;
     protected int dX;
     protected int dY;
-    protected int speed;
-    
+    protected double speed;
+    protected Point lastPoint;
     protected Shape hitBox;
     
     //kuva
@@ -46,7 +50,8 @@ public abstract class MapObject {
     protected int height;
     
     protected int ticker;
-    
+    protected int maxHealth;
+    protected int health;
     protected boolean destroyed;
     protected boolean collides=false;
 
@@ -73,8 +78,41 @@ public abstract class MapObject {
         collides=false;
         
         
-        
+        lastPoint=this.point;
         this.point = point;
+    }
+
+    public int getTargetY() {
+        return targetY;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+        this.health=maxHealth;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+    
+    public int getTargetX() {
+        return targetX;
+    }
+
+    public void setTargetY(int targetY) {
+        this.targetY = targetY;
+    }
+
+    public void setTargetX(int targetX) {
+        this.targetX = targetX;
     }
 
     public Shape getHitBox() {
@@ -83,6 +121,10 @@ public abstract class MapObject {
 
     public void setHitBox(Shape hitBox) {
         this.hitBox = hitBox;
+    }
+
+    public int getTicker() {
+        return ticker;
     }
 
     public void setSpeed(int speed) {
@@ -97,7 +139,7 @@ public abstract class MapObject {
         this.color = color;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
     
@@ -107,6 +149,7 @@ public abstract class MapObject {
      * @param dY 
      */
     public void move(int dX, int dY){
+        
         setPoint(new Point(getPoint().x+dX, getPoint().y+dY));
     }
 
@@ -123,15 +166,37 @@ public abstract class MapObject {
      * @param p piste jota kohti objekti on menossa
      */
     public void calculateVector(Point p){
+        
         int x=p.x;
         int y=p.y;
         
         double divider=(point.distance(p)/speed);
+        if(divider<=0){
+            divider=1;
+        }
         
-        dX=(int)((x-getX())/divider);
-        dY=(int)((y-getY())/divider);
+        
+        dX=((int)((x-getX())/divider));
+        dY=((int)((y-getY())/divider));
         
         
+        
+        
+        
+    }
+    public Point calcBulletPoint(Point p){
+        int x=p.x;
+        int y=p.y;
+        
+        double divider=(point.distance(p)/(width/2+10));
+        if(divider<=0){
+            divider=1;
+        }
+        
+        
+        int x2=((int)((x-getX())/divider));
+        int y2=((int)((y-getY())/divider));
+        return new Point(getX()+x2,getY()+y2);
     }
     
     /**

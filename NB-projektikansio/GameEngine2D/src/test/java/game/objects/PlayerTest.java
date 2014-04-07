@@ -2,6 +2,7 @@
 package game.objects;
 
 import game.Main;
+import game.gui.Clicks;
 import game.map.TileMap;
 import java.awt.Point;
 import org.junit.After;
@@ -21,6 +22,8 @@ public class PlayerTest {
     @BeforeClass
     public static void setUpClass() {
         map=new TileMap();
+        Clicks clicks=new Clicks();
+        Clicks.clicked=true;
         player=new Player(map);
         
     }
@@ -89,4 +92,5 @@ public class PlayerTest {
         
         
     }
+    
 }

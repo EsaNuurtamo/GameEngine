@@ -7,11 +7,11 @@ package game.handlers;
 import java.awt.Graphics2D;
 
 /**
- *
- * @author esa
+ * Luokka sisältää toiminnalisuuden joka yhditää kaikkia pelitiloja
+ * 
  */
 public abstract class GameState {
-    private GameHandler gameHandler;
+    protected GameHandler gameHandler;
 
     public GameState(GameHandler sh) {
         this.gameHandler=sh;

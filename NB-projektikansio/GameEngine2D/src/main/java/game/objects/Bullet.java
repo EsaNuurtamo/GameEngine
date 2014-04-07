@@ -25,8 +25,8 @@ import java.util.Random;
  * Luokka kuvaa yksittäistä luotia pelissä
  */
 public class Bullet extends MapObject implements Updatable{
-    private int speed=(int)(Main.TILE_SIZE*1.2);
-    private Point lastPoint;
+    
+    
     public Bullet(TileMap map) {
         this(null,map);
         setHitBox(new Rectangle(0,0,0,0));
@@ -42,6 +42,7 @@ public class Bullet extends MapObject implements Updatable{
         setHeight(Main.TILE_SIZE/4);
         setColor(Color.DARK_GRAY);
         type=MapObject.BULLET;
+        speed=30;
         
     }
 
@@ -56,7 +57,7 @@ public class Bullet extends MapObject implements Updatable{
      * 
      *  
      */
-    public void calculateVector(){
+    public void calcVect(){
         
         int x=Clicks.x-map.getX();
         int y=Clicks.y-map.getY();
@@ -73,6 +74,7 @@ public class Bullet extends MapObject implements Updatable{
     public void update(PlayState state) {
         
         if(collides)destroyed=true;
+        
         setLastPoint(getPoint());
         move(dX,dY);
         setHitBox(new Line2D.Float(map.getX()+getLastPoint().x,map.getY()+getLastPoint().y,map.getX()+getX(),map.getY()+getY()));

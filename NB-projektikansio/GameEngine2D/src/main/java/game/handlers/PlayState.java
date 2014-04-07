@@ -14,8 +14,11 @@ import game.objects.Bullet;
 import game.objects.Enemy;
 import game.objects.MapObject;
 import game.objects.Player;
+import game.objects.ShootingEnemy;
+import game.objects.Spawner;
 import game.objects.Updatable;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 
 import java.util.List;
@@ -32,10 +35,16 @@ public class PlayState extends GameState{
     private Player player;
     private List<MapObject> objects;
     private List<MapObject> newObjects;
+    private int ticker=0;
+    //tulokest
+    private int killCount=0;
+    private int killTarget=20;
+    private int countDown=10;
     public PlayState(GameHandler sh) {
         super(sh);
         
         objects=new ArrayList<MapObject>();
+        
         newObjects=new ArrayList<MapObject>();
         init();
         
@@ -43,6 +52,16 @@ public class PlayState extends GameState{
 
     public List<MapObject> getObjects() {
         return objects;
+    }
+    public void addKill(){
+        killCount++;
+    }
+    public int getKillCount() {
+        return killCount;
+    }
+
+    public void setKillCount(int killCount) {
+        this.killCount = killCount;
     }
 
     public Player getPlayer() {
@@ -86,15 +105,32 @@ public class PlayState extends GameState{
                 player.setDestroyed(true);
                 }
                 i.remove();
-                
             }
-            
         }
     }
     
     
     
-    
+    public void addSpawners(){
+        Spawner spawner=new Spawner(new Point(1400,1400),tileMap,MapObject.ENEMY);
+        objects.add(spawner);
+        spawner=new Spawner(new Point(200,1400),tileMap,MapObject.ENEMY);
+        spawner.setWait(40);
+        objects.add(spawner);
+        spawner=new Spawner(new Point(200,200),tileMap,MapObject.ENEMY);
+        spawner.setWait(80);
+        objects.add(spawner);
+        spawner=new Spawner(new Point(1400,200),tileMap,MapObject.ENEMY);
+        spawner.setWait(120);
+        objects.add(spawner);
+        spawner=new Spawner(new Point(1400,300),tileMap,MapObject.SOOTING_ENEMY);
+        spawner.setInterval(600);
+        objects.add(spawner);
+        spawner=new Spawner(new Point(200,1300),tileMap,MapObject.SOOTING_ENEMY);
+        spawner.setWait(250);
+        spawner.setInterval(600);
+        objects.add(spawner);
+    }
     
     
 
@@ -115,12 +151,30 @@ public class PlayState extends GameState{
      */
     @Override
     public void update() {
+        if(countDown==0){
+            countDown=-1;
+            addSpawners();
+        }
+        if(ticker%60==0){
+            countDown--;
+        }
+        if(ticker%30==0){
+           for( MapObject m:getObjectsOfType(MapObject.SPAWNER)){
+               Spawner s=(Spawner)m;
+               if(s.getInterval()<=60)continue;
+               s.setInterval(s.getInterval()-1);
+           }
+        }
         handleInput();
         
         updateObjects();
         deleteDestroyed();
         Clicks.resetClicks();
-        
+        ticker++;
+    }
+
+    public int getTicker() {
+        return ticker;
     }
     
     /**
@@ -135,6 +189,17 @@ public class PlayState extends GameState{
             if(obj.getType()==type){
                 l.add(obj);
             }
+            
+        }
+        if(type==MapObject.ENEMY){
+            type=MapObject.SOOTING_ENEMY;
+            for(MapObject obj:objects){
+                if(obj.getType()==type){
+                     l.add(obj);
+                }
+            
+        }
+                
         }
         return l;
     }
@@ -164,10 +229,18 @@ public class PlayState extends GameState{
         
         //piirrä ohje
         g.setColor(Color.WHITE);
+        g.setFont(Main.DEBUG);
         g.fill3DRect(10, 10, 200, 50, true);
         g.setColor(Color.BLACK);
-        g.drawString("Press ESC to quit", 30, 30);
+        g.drawString("Kills: "+killCount+"/"+killTarget, 30, 30);
+        g.drawString("Life: "+player.getHealth()+"/"+player.getMaxHealth(), 30, 55);
         
+        if(countDown<0)return;
+        g.setFont(new Font("Serif", Font.BOLD,40));
+        g.setColor(Color.WHITE);
+        g.fillRect(Main.WIDTH/2-170, Main.HEIGHT/2-150, 370, 60);
+        g.setColor(Color.BLACK);
+        g.drawString("Match begins in: "+this.countDown,Main.WIDTH/2-150,Main.HEIGHT/2-110);
     }
     
     /**
@@ -176,40 +249,30 @@ public class PlayState extends GameState{
     @Override
     public void handleInput() {
         if(Keys.keyState[Keys.ESC]){
-            System.exit(0);
+            gameHandler.setPaused(true);
         }
+        
         if(Keys.isPressed(Keys.E_KEY)){
-            newObjects.add(new Enemy(new Point(700,200),tileMap));
+            newObjects.add(new ShootingEnemy(new Point(700,200),tileMap));
         }
         if(player.isDestroyed())return;
+        int x=0;
+        int y=0;
         if(Keys.keyState[Keys.UP_KEY]){
-            player.move(0, -5);
+            y=-20;
         }
         if(Keys.keyState[Keys.DOWN_KEY]){
-            player.move(0, 5);
+            y=20;
         }
         if(Keys.keyState[Keys.LEFT_KEY]){
-            player.move(-5, 0);
+            x=-20;
         }
         if(Keys.keyState[Keys.RIGHT_KEY]){
-            player.move(5, 0);
+            x=20;
         }
-       /* Point p=player.getPoint();
-        if(Keys.keyState[Keys.UP_KEY]){
-            p.y-=10;
-        }    
-            
-        if(Keys.keyState[Keys.DOWN_KEY]){
-            p.y+=10;
-        }    
-        if(Keys.keyState[Keys.LEFT_KEY]){
-            p.x-=10;
-        }
-        if(Keys.keyState[Keys.RIGHT_KEY]){
-            p.x+=10;
-        }
+        Point p=new Point(player.getX()+x,player.getY()+y);
         player.calculateVector(p);
-        player.move(player.getdX(),player.getdY());*/
+        
         Keys.update();
     }
 

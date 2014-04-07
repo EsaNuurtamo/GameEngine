@@ -15,9 +15,9 @@ import static org.junit.Assert.*;
  *
  * @author esa
  */
-public class StateHandlerTest {
+public class GameHandlerTest {
     
-    public StateHandlerTest() {
+    public GameHandlerTest() {
     }
     
     @BeforeClass

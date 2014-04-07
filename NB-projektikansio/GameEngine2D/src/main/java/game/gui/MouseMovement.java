@@ -5,6 +5,7 @@
 package game.gui;
 
 import game.Main;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
@@ -18,7 +19,9 @@ public class MouseMovement implements MouseMotionListener{
     public static int yOnMap;
     
     public boolean dragged=false;
-
+    public static Point getPoint(){
+        return new Point(x,y);
+    }
     @Override
     public void mouseDragged(MouseEvent e) {
         

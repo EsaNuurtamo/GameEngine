@@ -3,12 +3,13 @@ package game.objects;
 
 import game.Main;
 import game.gui.Clicks;
+import game.gui.Keys;
 import game.handlers.GameHandler;
 import game.handlers.GameState;
 import game.gui.MouseMovement;
 import game.handlers.PlayState;
 import game.map.TileMap;
-import game.tools.Collisions;
+import game.tools.Geometry;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -23,17 +24,20 @@ public class Player extends MapObject implements Updatable{
         setHeight(Main.TILE_SIZE);
         setColor(Color.CYAN);
         type=MapObject.PLAYER;
-        setSpeed(5);
+        setSpeed(6);
+        setMaxHealth(1000);
     }
 
     @Override
     public void setPoint(Point point) {
+        
         super.setPoint(point);
         if(collides)return;
         int x=-point.x+Math.round(Main.WIDTH/2);
         int y=-point.y+Math.round(Main.HEIGHT/2);
         getMap().setLocation(new Point(x,y));
     }
+    
     
     
     
@@ -49,29 +53,41 @@ public class Player extends MapObject implements Updatable{
     public void draw(Graphics2D g) {
         super.draw(g);
         g.setColor(Color.BLUE);
-        g.drawString(getX()+" "+getY(), getX()+map.getX(), getY()+map.getY());
+        g.setFont(Main.DEBUG);
+        //g.drawString(getX()+" "+getY(), getX()+map.getX(), getY()+map.getY());
     }
     
     
 
     @Override
     public void update(PlayState state) {
-        
+        if(health<=0)destroyed=true;
         
         for(MapObject m:state.getObjectsOfType(MapObject.ENEMY)){
-            if(Collisions.circleCircleCollision(m, this)){
-                destroyed=true;
+            if(Geometry.circleCircleCollision(m, this)){
+                health--;
                 m.setDestroyed(true);
             }
-            
-            
+        }
+        for(MapObject m:state.getObjectsOfType(MapObject.BULLET)){
+            if(Geometry.CircleLineCollision(this,(Bullet)m)){
+                health--;
+                
+            }
         }
         
         if(Clicks.clicked){
-            Bullet b=new Bullet(point,map);
-            b.calculateVector();
+            Point p=calcBulletPoint(new Point(Clicks.x-map.getX(),Clicks.y-map.getY()));
+            
+            Bullet b=new Bullet(p,map);
+            b.calcVect();
             state.getNewObjects().add(b);
         }
+        
+        
+        
+        
+        move(dX,dY);
         
         
     }

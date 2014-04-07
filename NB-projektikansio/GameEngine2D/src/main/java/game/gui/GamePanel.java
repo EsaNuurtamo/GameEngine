@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -37,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable{
         image = new BufferedImage(Main.WIDTH, Main.HEIGHT, BufferedImage.TYPE_INT_RGB);
         graphics = (Graphics2D) image.getGraphics();
         gameHandler=new GameHandler();
-        gameHandler.setState(GameHandler.PLAY_STATE);
+        gameHandler.setState(GameHandler.MENU_STATE);
         keys= new Keys();
         mm=new MouseMovement();
         clicks=new Clicks();
@@ -73,14 +74,17 @@ public class GamePanel extends JPanel implements Runnable{
             //
            
             elapsed = System.nanoTime() - start;
+            
             wait=tickLength-(elapsed/1000000);
             if(wait<0)wait=1;
             try {
-                Thread.sleep(wait);
+                TimeUnit.MILLISECONDS.sleep(wait);
+                
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
             //System.out.println(1000000000/(System.nanoTime()-start));
+            
         }
     }
     

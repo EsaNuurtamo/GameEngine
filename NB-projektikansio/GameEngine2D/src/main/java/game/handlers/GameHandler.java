@@ -13,12 +13,13 @@ import java.awt.Graphics2D;
 public class GameHandler {
     public static final int MENU_STATE=0;
     public static final int PLAY_STATE=1;
-    public static final int PAUSE_STATE=2;
     
+    private boolean paused=false;
     private GameState curState;
+    private GameState pauseState;
 
     public GameHandler() {
-        
+        pauseState=new PauseState(this);
     }
     
     /**
@@ -26,7 +27,7 @@ public class GameHandler {
      * @param state saadaan toiselta luokalta
      */
     public void setState(int state) {
-        curState=null;
+        
         if(state==MENU_STATE){
             curState=new MenuState(this);
         }else if(state==PLAY_STATE){
@@ -38,8 +39,20 @@ public class GameHandler {
      * Päivittää aktiivisen pelitilan
      */
     public void updateGame(){
+        if(paused){
+            pauseState.update();
+            return;
+        }
         curState.update();
         
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+    }
+
+    public boolean isPaused() {
+        return paused;
     }
     
     /**
@@ -48,8 +61,17 @@ public class GameHandler {
      * krafiikkaolio
      */
     public void drawGame(Graphics2D g){
+        if(paused){
+            pauseState.draw(g);
+           
+            
+        }else{
+            
+            curState.draw(g);
+        }
         
-        curState.draw(g);
+        
+        
         
     }
     

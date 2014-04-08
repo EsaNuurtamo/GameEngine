@@ -6,9 +6,9 @@ package game.objects;
 
 import game.Main;
 import game.gui.Clicks;
-import game.handlers.GameState;
+import game.gameLogic.GameState;
 import game.gui.MouseMovement;
-import game.handlers.PlayState;
+import game.gameLogic.PlayState;
 import game.map.TileMap;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -26,12 +26,8 @@ import java.util.Random;
  */
 public class Bullet extends MapObject implements Updatable{
     
+    private boolean players;
     
-    public Bullet(TileMap map) {
-        this(null,map);
-        setHitBox(new Rectangle(0,0,0,0));
-        
-    }
     
     public Bullet(Point p, TileMap map){
         super(map);
@@ -43,7 +39,16 @@ public class Bullet extends MapObject implements Updatable{
         setColor(Color.DARK_GRAY);
         type=MapObject.BULLET;
         speed=30;
+        players=false;
         
+    }
+
+    public void setPlayers(boolean players) {
+        this.players = players;
+    }
+
+    public boolean isPlayers() {
+        return players;
     }
 
     public Point getLastPoint() {
@@ -53,31 +58,17 @@ public class Bullet extends MapObject implements Updatable{
     public void setLastPoint(Point lastPoint) {
         this.lastPoint = lastPoint;
     }
-    /**
-     * 
-     *  
-     */
-    public void calcVect(){
-        
-        int x=Clicks.x-map.getX();
-        int y=Clicks.y-map.getY();
-        Point p=new Point(x,y);
-        
-        double divider=(point.distance(p)/speed);
-        dX=(int)((x-getX())/divider);
-        dY=(int)((y-getY())/divider);
-        
-        
-    }
-
+    
     @Override
     public void update(PlayState state) {
+        if(collides||state.getPlayer().getPoint().distance(this.getPoint())>10000)destroyed=true;
+        update();
         
-        if(collides)destroyed=true;
-        
+    }
+    
+    public void update(){
         setLastPoint(getPoint());
         move(dX,dY);
-        setHitBox(new Line2D.Float(map.getX()+getLastPoint().x,map.getY()+getLastPoint().y,map.getX()+getX(),map.getY()+getY()));
     }
 
    

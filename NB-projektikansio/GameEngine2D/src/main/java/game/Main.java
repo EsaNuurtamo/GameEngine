@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 public class Main {
+    
     public static final Font DEBUG=new Font("Sarif", Font.PLAIN,20);
     //tällä hetkellä käytä vain parillisia numeroita
     public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();

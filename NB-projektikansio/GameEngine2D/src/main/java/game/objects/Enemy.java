@@ -5,7 +5,7 @@
 package game.objects;
 
 import game.Main;
-import game.handlers.PlayState;
+import game.gameLogic.PlayState;
 import game.map.TileMap;
 import game.tools.Geometry;
 import java.awt.Color;
@@ -42,6 +42,8 @@ public class Enemy extends MapObject implements Updatable{
     public void update(PlayState state) {
         if(health<=0){
             state.addKill();
+            state.getNewObjects().add(new Explosion(point,map));
+            
             destroyed=true;
         }
         
@@ -51,14 +53,17 @@ public class Enemy extends MapObject implements Updatable{
         int y=state.getPlayer().getdY();
         advancePoint=Geometry.calculateAdvancement(this, state.getPlayer());
         calculateVector(advancePoint);
+        //calculateVector(state.getPlayer().getPoint());
         move(dX,dY);
     }
 
     @Override
     public void draw(Graphics2D g) {
+        
         super.draw(g);
-        if(advancePoint==null)return;
-        //g.setColor(Color.RED);
+        
+        
+        
         //g.fill3DRect(advancePoint.x+map.getX(), advancePoint.y+map.getY(), 10, 10, false);
         
     }
@@ -66,8 +71,10 @@ public class Enemy extends MapObject implements Updatable{
     public boolean getCollisions(PlayState state){
         for(MapObject m:state.getObjectsOfType(MapObject.BULLET)){
             Bullet b=(Bullet)m;
+            if(!b.isPlayers())continue;
             if(Geometry.CircleLineCollision(this,b)){
                 health--;
+                
                 
             }
         }

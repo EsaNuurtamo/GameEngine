@@ -4,7 +4,7 @@
  */
 package game.objects;
 
-import game.handlers.PlayState;
+import game.gameLogic.PlayState;
 import game.map.TileMap;
 import java.awt.Color;
 import java.awt.Graphics2D;

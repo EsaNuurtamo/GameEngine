@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.handlers;
+package game.gameLogic;
 
 import com.sun.org.apache.xml.internal.utils.ObjectStack;
 import game.gui.MouseMovement;
@@ -12,6 +12,7 @@ import game.Main;
 import game.map.TileMap;
 import game.objects.Bullet;
 import game.objects.Enemy;
+import game.objects.Explosion;
 import game.objects.MapObject;
 import game.objects.Player;
 import game.objects.ShootingEnemy;
@@ -39,7 +40,7 @@ public class PlayState extends GameState{
     //tulokest
     private int killCount=0;
     private int killTarget=20;
-    private int countDown=10;
+    private int countDown=1;
     public PlayState(GameHandler sh) {
         super(sh);
         
@@ -165,6 +166,9 @@ public class PlayState extends GameState{
                s.setInterval(s.getInterval()-1);
            }
         }
+        
+        //testi
+        
         handleInput();
         
         updateObjects();
@@ -199,7 +203,7 @@ public class PlayState extends GameState{
                 }
             
         }
-                
+                    
         }
         return l;
     }
@@ -253,7 +257,7 @@ public class PlayState extends GameState{
         }
         
         if(Keys.isPressed(Keys.E_KEY)){
-            newObjects.add(new ShootingEnemy(new Point(700,200),tileMap));
+            objects.add(new ShootingEnemy(new Point(100,100), tileMap));
         }
         if(player.isDestroyed())return;
         int x=0;

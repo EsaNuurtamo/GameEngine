@@ -15,51 +15,18 @@ import java.awt.Point;
 import java.util.Vector;
 /**
  * Luokka sisältää staattiset metodit eri tyyppisten törmäysten laskemiseen
+ * ja muihin
  */
 public class Geometry {
 
     public static boolean CircleLineCollision(MapObject e, Bullet bul){
+        //väliaikainen nyt testaa vain janan päät
         if(e.getPoint().distance(bul.getPoint())<e.getWidth()/2||
            e.getPoint().distance(bul.getLastPoint())<e.getWidth()/2){
            return true; 
         }
         return false;
-        /*Point a=bul.getLastPoint();
-        Point b=bul.getPoint();
-        if(a.equals(b))return false;
-        System.out.println(a+" "+b);
-        Point c=e.getPoint();
-        double d=(double)e.getWidth()/2;
-        double LAB = a.distance(b);
-        double Dx = (b.x-a.x)/LAB;
-        double Dy = (b.y-a.y)/LAB;
-
-       
-        double t = Dx*(c.x-a.x) + Dy*(c.y-a.y);   
-
-        double Ex = t*Dx+a.x;
-        double Ey = t*Dy+a.y;
-
-        double LEC = Math.sqrt( Math.pow(Ex-c.x,2)+Math.pow(Ey-c.y,2) );
-
-        if( LEC < d ){
-            double dt = Math.sqrt( Math.pow(e.getWidth()/2,2) - Math.pow(LEC, 2));
-            // compute first intersection point
-            double Fx = (t-dt)*Dx + a.x;
-            double Fy = (t-dt)*Dy + a.y;
-            Point one=new Point((int)Fx,(int)Fy);
-            
-            double Gx = (t+dt)*Dx + a.x;
-            double Gy = (t+dt)*Dy + a.y;
-            Point two=new Point((int)Gx,(int)Gy);
-            
-            if(one.distance(e.getPoint())<e.getWidth()+2||
-               two.distance(e.getPoint())<e.getWidth()+2){
-                return true;
-            }
-            
-        }
-        return false;*/
+        
     }
 
     public static boolean circleCircleCollision(MapObject mob, MapObject obj){
@@ -68,16 +35,26 @@ public class Geometry {
         }
         return false;
     }
+    /**
+     * Laskee ennakon jos haltutaan että objekti yrittää osua toiseen objektiin
+     * esim. kuinka paljon liikkuvan hahmon eteen pitää tähdätä jotta luoti osuu
+     * 
+    */
     public static Point calculateAdvancement(MapObject obj, MapObject p){
         //lasketaan kolmio
         double dist=p.getPoint().distance(obj.getPoint());
         double dot=(p.getdX()*(obj.getX()-p.getX())+p.getdY()*(obj.getY()-p.getY()));
         double cosX=dot/(p.getSpeed()*dist);
         double angle1=Math.toDegrees(Math.acos(cosX));
-        double angle2=180-90-angle1;
+        double dot2=(obj.getdX()*(p.getX()-obj.getX())+obj.getdY()*(p.getY()-obj.getY()));
+        double angle2=Math.toDegrees(Math.acos(dot2/(obj.getSpeed()*dist)));
+        double angle3=Math.toRadians(180-angle1-angle2);
         
-        double magnitude=(dist/2)/Math.sin(Math.toRadians(angle2));
-        double coefficent=Math.abs(magnitude/p.getSpeed());
+        double distRelative=
+                Math.sqrt(Math.pow(p.getSpeed(), 2)+Math.pow(obj.getSpeed(),2)-2*p.getSpeed()*obj.getSpeed()*Math.cos(angle3));
+        
+        
+        double coefficent=(dist/distRelative);
         
         double x=p.getX()+(coefficent*p.getdX());
         double y=p.getY()+(coefficent*p.getdY());

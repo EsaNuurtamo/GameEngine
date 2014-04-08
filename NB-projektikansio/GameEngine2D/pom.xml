@@ -44,12 +44,12 @@
             <version>0.30</version>
             <configuration>
                 <targetClasses>
-                    <param>game.handlers.*</param>
+                    <param>game.gameLogic.*</param>
                     <param>game.map.*</param>
                     <param>game.objects.*</param>
                 </targetClasses>
                 <targetTests>
-                    <param>game.handlers.*</param>
+                    <param>game.gameLogic.*</param>
                     <param>game.map.*</param>
                     <param>game.objects.*</param>
                 </targetTests>

@@ -1,6 +1,8 @@
 
-package game.handlers;
+package game.gameLogic;
 
+import game.gui.PauseState;
+import game.gui.MenuState;
 import java.awt.Color;
 import java.awt.Graphics2D;
 

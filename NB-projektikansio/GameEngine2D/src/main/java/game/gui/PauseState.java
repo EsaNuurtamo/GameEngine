@@ -2,10 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.handlers;
+package game.gui;
 
+import game.gui.MenuState;
 import game.Main;
 import game.gui.Keys;
+import game.gameLogic.GameHandler;
+import game.gameLogic.GameState;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;

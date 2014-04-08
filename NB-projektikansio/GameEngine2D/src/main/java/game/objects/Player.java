@@ -4,10 +4,10 @@ package game.objects;
 import game.Main;
 import game.gui.Clicks;
 import game.gui.Keys;
-import game.handlers.GameHandler;
-import game.handlers.GameState;
+import game.gameLogic.GameHandler;
+import game.gameLogic.GameState;
 import game.gui.MouseMovement;
-import game.handlers.PlayState;
+import game.gameLogic.PlayState;
 import game.map.TileMap;
 import game.tools.Geometry;
 import java.awt.Color;
@@ -66,13 +66,14 @@ public class Player extends MapObject implements Updatable{
         for(MapObject m:state.getObjectsOfType(MapObject.ENEMY)){
             if(Geometry.circleCircleCollision(m, this)){
                 health--;
-                m.setDestroyed(true);
+                m.setHealth(0);
             }
         }
         for(MapObject m:state.getObjectsOfType(MapObject.BULLET)){
-            if(Geometry.CircleLineCollision(this,(Bullet)m)){
+            Bullet b=(Bullet)m;
+            if(Geometry.CircleLineCollision(this,b)){
                 health--;
-                
+                b.setDestroyed(true);
             }
         }
         
@@ -80,7 +81,11 @@ public class Player extends MapObject implements Updatable{
             Point p=calcBulletPoint(new Point(Clicks.x-map.getX(),Clicks.y-map.getY()));
             
             Bullet b=new Bullet(p,map);
-            b.calcVect();
+            b.setPlayers(true);
+            
+            int x=Clicks.x-map.getX();
+            int y=Clicks.y-map.getY();
+            b.calculateVector(new Point(x,y));
             state.getNewObjects().add(b);
         }
         

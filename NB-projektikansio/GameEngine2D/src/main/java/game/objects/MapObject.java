@@ -3,8 +3,8 @@ package game.objects;
 
 import game.Main;
 import game.gui.Clicks;
-import game.handlers.GameState;
-import game.handlers.PlayState;
+import game.gameLogic.GameState;
+import game.gameLogic.PlayState;
 import game.map.TileMap;
 import java.awt.Color;
 import java.awt.Graphics2D;

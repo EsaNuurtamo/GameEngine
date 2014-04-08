@@ -2,10 +2,11 @@
 package game.objects;
 
 import game.gui.Clicks;
-import game.handlers.PlayState;
+import game.gameLogic.PlayState;
 import game.map.TileMap;
 import game.tools.Geometry;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
 
 /**
@@ -23,21 +24,28 @@ public class ShootingEnemy extends Enemy{
     }
 
     @Override
+    public void draw(Graphics2D g) {
+        super.draw(g);
+        
+    }
+
+    @Override
     public void update(PlayState state) {
         if(health<=0){
             state.addKill();
+            state.getNewObjects().add(new Explosion(point,map));
             destroyed=true;
         }
-        if(ticker>50){
+        if(ticker>30){
             ticker=0;
             Player p=state.getPlayer();
             Point poi=this.calcBulletPoint(p.getPoint());
             MapObject b=new Bullet(poi,map);
             
             
-            int x2=p.getX()+p.getdX();
-            int y2=p.getY()+p.getdY();
-            b.calculateVector(new Point(x2,y2));
+            
+            Point ad=Geometry.calculateAdvancement(b, state.getPlayer());
+            b.calculateVector(ad);
             
             
             state.getNewObjects().add(b);

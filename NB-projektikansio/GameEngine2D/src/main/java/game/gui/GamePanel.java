@@ -2,8 +2,8 @@
 package game.gui;
 
 import game.Main;
-import game.handlers.PlayState;
-import game.handlers.GameHandler;
+import game.gameLogic.PlayState;
+import game.gameLogic.GameHandler;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;

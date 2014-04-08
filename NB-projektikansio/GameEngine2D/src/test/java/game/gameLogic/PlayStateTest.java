@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.handlers;
+package game.gameLogic;
 
+import game.gameLogic.PlayState;
+import game.gameLogic.GameHandler;
 import game.gui.Clicks;
 import game.objects.Bullet;
 import game.objects.Enemy;

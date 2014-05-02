@@ -4,6 +4,7 @@
  */
 package game.objects;
 
+import game.objects.guns.Bullet;
 import game.Main;
 import game.gameLogic.PlayState;
 import game.map.TileMap;
@@ -20,7 +21,7 @@ import java.awt.geom.PathIterator;
  * Enemylla on myös läpikäytävää logiikkaa
  */
 public class Enemy extends MapObject implements Updatable{
-    private Point advancePoint;
+    
     public Enemy(Point p, TileMap map) {
         super(map);
         
@@ -40,6 +41,7 @@ public class Enemy extends MapObject implements Updatable{
      */
     @Override
     public void update(PlayState state) {
+        //jos health loppu niin lisää tappo ja räjähdys ja aseta tuhottavaksi
         if(health<=0){
             state.addKill();
             state.getNewObjects().add(new Explosion(point,map));
@@ -51,8 +53,8 @@ public class Enemy extends MapObject implements Updatable{
         
         int x=state.getPlayer().getdX();
         int y=state.getPlayer().getdY();
-        advancePoint=Geometry.calculateAdvancement(this, state.getPlayer());
-        calculateVector(advancePoint);
+        Point p=Geometry.calculateAdvancement(this, state.getPlayer());
+        calculateVector(p);
         //calculateVector(state.getPlayer().getPoint());
         move(dX,dY);
     }
@@ -69,15 +71,7 @@ public class Enemy extends MapObject implements Updatable{
     }
     
     public boolean getCollisions(PlayState state){
-        for(MapObject m:state.getObjectsOfType(MapObject.BULLET)){
-            Bullet b=(Bullet)m;
-            if(!b.isPlayers())continue;
-            if(Geometry.CircleLineCollision(this,b)){
-                health--;
-                
-                
-            }
-        }
+        
         for(MapObject m:state.getObjectsOfType(MapObject.ENEMY)){
             if(m.equals(this))continue;
             if(Geometry.circleCircleCollision(m, this)){

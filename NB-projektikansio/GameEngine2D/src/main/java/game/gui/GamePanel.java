@@ -17,7 +17,7 @@ import javax.swing.JPanel;
  * Luokka GamePanel suoritetaan omana säikeenä
  * Se sisältää main loopin jossa peli päivittyy
  * Piirtäminen tapahtuu kaksivaiheisesti: aluksi buffered imageen 
- * ja sitten vasta buffered image piirtyy GamePanelin perimään Jpaneliin
+ * ja sitten vasta buffered image piirtyy GamePaneliin.
  */
 public class GamePanel extends JPanel implements Runnable{
     public static final int FPS=60;
@@ -42,6 +42,7 @@ public class GamePanel extends JPanel implements Runnable{
         keys= new Keys();
         mm=new MouseMovement();
         clicks=new Clicks();
+        
     }
     
     public void init(){

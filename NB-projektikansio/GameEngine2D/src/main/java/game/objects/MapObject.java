@@ -13,6 +13,7 @@ import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +42,7 @@ public abstract class MapObject {
     
     //kuva
     protected Color color;
-    //BufferedImage image;
+    BufferedImage image;
    
     protected int type;
     protected TileMap map;
@@ -68,6 +69,7 @@ public abstract class MapObject {
      * @param point 
      */
     public void setPoint(Point point) {
+        //estää menemisen mapin ulkopuolelle
         if(point.x<Main.TILE_SIZE+Math.round(width/2)||
            point.x>Main.TILE_SIZE*(map.mapSize-1)-width/2||
            point.y<Main.TILE_SIZE+Math.round(height/2)||

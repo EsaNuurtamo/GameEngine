@@ -16,9 +16,14 @@ public class Clicks implements MouseListener{
     public static int x;
     public static int y;
     public static boolean clicked=false;
+    public static boolean prevState=false;
     
-    public static void resetClicks(){
-        clicked=false;
+    public static void update(){
+        prevState=clicked;
+    }
+    
+    public static boolean isClicked(){
+        return clicked&&!prevState;
     }
     public static Point getPoint(){
         return new Point(x,y);
@@ -38,7 +43,7 @@ public class Clicks implements MouseListener{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+        clicked=false;
         
     }
 

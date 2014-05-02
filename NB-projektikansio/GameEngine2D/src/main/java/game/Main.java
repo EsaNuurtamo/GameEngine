@@ -44,7 +44,7 @@ public class Main {
         BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
         Cursor blankCursor = 
             Toolkit.getDefaultToolkit().createCustomCursor(
-            cursorImg, new Point(0, 0), "blank cursor");
+                cursorImg, new Point(0, 0), "blank cursor");
         frame.getContentPane().setCursor(blankCursor);
         frame.setAlwaysOnTop(true);
         

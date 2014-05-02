@@ -27,8 +27,8 @@ public class Explosion extends MapObject{
     public void draw(Graphics2D g) {
         
         if(ticker>8)destroyed=true;
-        Color red=new Color(255,0,0,200);
-        Color yellow=new Color(255,255,0,200);
+        Color red=new Color(255,0,0,255);
+        Color yellow=new Color(255,255,0,255);
                 boolean isYellow;
 
                 for(int i=10; i<=360; i+=10){
@@ -42,12 +42,11 @@ public class Explosion extends MapObject{
                         isYellow=true;
                     }
                     
-                    //piirtää ympurän sektorit
+                    //piirtää ympurän sektorit, kuvio kasvaa ajan myötä
                     int width2=width*3/10*getTicker();
-                    
                     g.fillArc(
-                        getX()-(int)(0.5*width2)-(int)(0.5*width)+map.getX(), 
-                        getY()-(int)(0.5*width2)-(int)(0.5*width)+map.getY(),
+                        getX()-(int)(0.5*width2)+map.getX(), 
+                        getY()-(int)(0.5*width2)+map.getY(),
                         width2, width2, (isYellow?10:20)*(i/10), (isYellow?10:20)
                     );
                 }

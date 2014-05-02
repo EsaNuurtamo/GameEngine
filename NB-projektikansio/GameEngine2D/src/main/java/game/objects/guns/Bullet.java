@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.objects;
+package game.objects.guns;
 
 import game.Main;
 import game.gui.Clicks;
@@ -10,6 +10,9 @@ import game.gameLogic.GameState;
 import game.gui.MouseMovement;
 import game.gameLogic.PlayState;
 import game.map.TileMap;
+import game.objects.MapObject;
+import game.objects.Updatable;
+import game.tools.Geometry;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.List;
@@ -61,15 +64,30 @@ public class Bullet extends MapObject implements Updatable{
     
     @Override
     public void update(PlayState state) {
-        if(collides||state.getPlayer().getPoint().distance(this.getPoint())>10000)destroyed=true;
+        if(collides||state.getPlayer().getPoint().distance(this.getPoint())>10000){
+            destroyed=true;
+            
+        }
+        for(MapObject m:state.getObjectsOfType(MapObject.ENEMY)){
+            
+            if(!isPlayers())break;
+            if(Geometry.CircleLineCollision(m,this)){
+                m.setHealth(m.getHealth()-1);
+                
+                
+                
+            }
+        }
         update();
         
     }
-    
+   
     public void update(){
         setLastPoint(getPoint());
         move(dX,dY);
     }
+    
+    
 
    
 

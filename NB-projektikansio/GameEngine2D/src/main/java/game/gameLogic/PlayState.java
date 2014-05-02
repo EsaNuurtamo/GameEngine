@@ -9,8 +9,9 @@ import game.gui.MouseMovement;
 import game.gui.Keys;
 import game.gui.Clicks;
 import game.Main;
+import game.gui.GamePanel;
 import game.map.TileMap;
-import game.objects.Bullet;
+import game.objects.guns.Bullet;
 import game.objects.Enemy;
 import game.objects.Explosion;
 import game.objects.MapObject;
@@ -18,6 +19,9 @@ import game.objects.Player;
 import game.objects.ShootingEnemy;
 import game.objects.Spawner;
 import game.objects.Updatable;
+import game.objects.guns.MachineGun;
+import game.objects.guns.Pistol;
+import game.objects.guns.Shotgun;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -28,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Luokka kuva tilaa jossa peliä pelataan
+ * Luokka kuvaa tilaa jossa peliä pelataan
  */
 public class PlayState extends GameState{
     public static final int CURSOR_SIZE=20;
@@ -40,7 +44,9 @@ public class PlayState extends GameState{
     //tulokest
     private int killCount=0;
     private int killTarget=20;
-    private int countDown=1;
+    private int countDown=10;
+    //ajastin pelaajalle näytettäville viesteille
+    private int noteTimer=60;
     public PlayState(GameHandler sh) {
         super(sh);
         
@@ -152,12 +158,18 @@ public class PlayState extends GameState{
      */
     @Override
     public void update() {
+        
         if(countDown==0){
             countDown=-1;
             addSpawners();
         }
-        if(ticker%60==0){
+        if(ticker%GamePanel.FPS==0){
             countDown--;
+        }
+        //piirrä tappomäärä kymmenen tapon välein
+        if(killCount>0&&killCount%10==0){
+            
+            noteTimer=0;
         }
         if(ticker%30==0){
            for( MapObject m:getObjectsOfType(MapObject.SPAWNER)){
@@ -173,7 +185,7 @@ public class PlayState extends GameState{
         
         updateObjects();
         deleteDestroyed();
-        Clicks.resetClicks();
+        Clicks.update();
         ticker++;
     }
 
@@ -234,17 +246,33 @@ public class PlayState extends GameState{
         //piirrä ohje
         g.setColor(Color.WHITE);
         g.setFont(Main.DEBUG);
-        g.fill3DRect(10, 10, 200, 50, true);
+        g.fill3DRect(10, 10, 200, 80, true);
         g.setColor(Color.BLACK);
         g.drawString("Kills: "+killCount+"/"+killTarget, 30, 30);
         g.drawString("Life: "+player.getHealth()+"/"+player.getMaxHealth(), 30, 55);
+        String gun="";
+        if(player.getGun() instanceof Shotgun)gun="Shotgun";
+        else if(player.getGun() instanceof Pistol)gun="Pistol";
+        else if(player.getGun() instanceof MachineGun)gun="MG";
+        g.drawString("Gun: "+gun+" "+player.getGun().getInClip()+"/"+player.getGun().getAmmo(), 30, 80);
         
-        if(countDown<0)return;
+        //!tee luokka notification johon kaikki alemmat tapaukset!
+        //piirrä ajastin
+        if(countDown<=0)return;
         g.setFont(new Font("Serif", Font.BOLD,40));
         g.setColor(Color.WHITE);
         g.fillRect(Main.WIDTH/2-170, Main.HEIGHT/2-150, 370, 60);
         g.setColor(Color.BLACK);
         g.drawString("Match begins in: "+this.countDown,Main.WIDTH/2-150,Main.HEIGHT/2-110);
+        
+        if(noteTimer<60){
+            noteTimer++;
+            g.setFont(new Font("Serif", Font.PLAIN,40));
+            g.setColor(Color.BLACK);
+            g.drawString(killCount+"KILLED",Main.WIDTH/2-150,Main.HEIGHT/2-110);
+        }
+        
+        
     }
     
     /**
@@ -257,7 +285,7 @@ public class PlayState extends GameState{
         }
         
         if(Keys.isPressed(Keys.E_KEY)){
-            objects.add(new ShootingEnemy(new Point(100,100), tileMap));
+            player.nextGun();
         }
         if(player.isDestroyed())return;
         int x=0;

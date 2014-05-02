@@ -4,7 +4,7 @@
  */
 package game.tools;
 
-import game.objects.Bullet;
+import game.objects.guns.Bullet;
 import game.objects.Enemy;
 import game.objects.MapObject;
 import game.objects.Player;

@@ -7,9 +7,10 @@ package game.gameLogic;
 import game.gameLogic.PlayState;
 import game.gameLogic.GameHandler;
 import game.gui.Clicks;
-import game.objects.Bullet;
+import game.objects.guns.Bullet;
 import game.objects.Enemy;
 import game.objects.MapObject;
+import game.objects.Spawner;
 import java.awt.Point;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -73,19 +74,21 @@ public class PlayStateTest {
         
     }
     @Test
-    public void testingUpdate(){
+    public void updateAddingObjects(){
         int first=ps.getObjects().size()-1;
         addObjects();
         ps.updateObjects();
-        Point oneP=ps.getObjects().get(first+1).getPoint();
-        Point twoP=ps.getObjects().get(first+2).getPoint();
+        MapObject obj1=ps.getObjects().get(first+1);
+        MapObject obj2=ps.getObjects().get(first+2);
+        Point p1=obj1.getPoint();
+        Point p2=obj2.getPoint();
         
         ps.updateObjects();
         
-        assertTrue(ps.getObjects().get(first+1).getTicker()>0);
-        assertTrue(ps.getObjects().get(first+2).getTicker()>0);
-        assertNotSame(oneP, ps.getObjects().get(first+1).getPoint());
-        assertNotSame(twoP, ps.getObjects().get(first+2).getPoint());
+        assertTrue(obj1.getTicker()>0);
+        assertTrue(obj2.getTicker()>0);
+        assertNotSame(p1, obj1.getPoint());
+        assertNotSame(p2, obj2.getPoint());
     }
     public void addObjects(){
         MapObject one=new Enemy(new Point(150,150),ps.getTileMap());
@@ -93,5 +96,11 @@ public class PlayStateTest {
         ps.getNewObjects().add(one);
         ps.getNewObjects().add(two);
        
+    }
+    @Test
+    public void updateSpawnerInteraction(){
+        Spawner s=new Spawner(new Point(1400,1400),ps.getTileMap(),MapObject.ENEMY);
+        ps.getObjects().add(s);
+        
     }
 }

@@ -11,7 +11,7 @@ import game.gameLogic.GameState;
 import game.gameLogic.GameState;
 import game.gameLogic.GameState;
 import game.map.TileMap;
-import game.objects.Bullet;
+import game.objects.guns.Bullet;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -36,13 +36,13 @@ public class MenuState extends GameState{
         //luodaan puu
         MenuNode main=
         new MenuNode("GameEngine2D",new MenuNode("Play"),
-                            new MenuNode("Tutorial"),
-                            new MenuNode("Options",new MenuNode("Game Options"),
-                                                   new MenuNode("Video Options"),
-                                                   new MenuNode("Audio Options")),
-                            new MenuNode("Controls",new MenuNode("View Controls"),
-                                                    new MenuNode("Edit Controls")),
-                            new MenuNode("Exit"));
+                                    new MenuNode("Tutorial"),
+                                    new MenuNode("Options", new MenuNode("Game Options"),
+                                                            new MenuNode("Video Options"),
+                                                            new MenuNode("Audio Options")),
+                                    new MenuNode("Controls",new MenuNode("View Controls"),
+                                                            new MenuNode("Edit Controls")),
+                                    new MenuNode("Exit"));
             
             
         
@@ -105,6 +105,7 @@ public class MenuState extends GameState{
                     int d=(int)(bul.getWidth()+bul.getSpeed()/3);
                     bul.setWidth(d);
                     bul.setHeight(d);
+                    
                 }
 
                 bul.getPoint().translate(bul.getdX(), bul.getdY());

@@ -36,5 +36,31 @@
 - Luokkien refaktorointia -2h
 - yhteens‰: 29h
 
+*30.3*
+- ampumistoiminto viimeistelty -2h
+- yhteens‰: 31h
 
+*3.4*
+- tehty metodi calculateAdvancement joka laskee ennakon
+  vihollinen siis t‰ht‰‰ hieman pelaajan eteen -2h
+- toteutettu valikkoon palloefekti -1h
+- yhteens‰: 34h
+
+*10.4*
+- tehty luokka Gun ja lis‰tty ensimm‰inen ase Pistol -1h
+- korjattu bugeja -1h
+- yhteens‰: 36h
+
+*15.4*
+- lis‰tty uudet aseet MachineGun ja Shotgun -2h
+- yhteens‰: 38h
+
+*20.4*
+- bugien korjausta -1h
+- aloitettu valikon muokkaaminen puurakenteiseksi -1h
+- yhteens‰: 40h
+
+*24.4*
+- valikon viimeistely‰ -1h
+- yhteens‰: 41h
 

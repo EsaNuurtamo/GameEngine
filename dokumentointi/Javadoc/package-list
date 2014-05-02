@@ -1,6 +1,7 @@
 game
+game.gameLogic
 game.gui
-game.handlers
 game.map
 game.objects
+game.objects.guns
 game.tools
